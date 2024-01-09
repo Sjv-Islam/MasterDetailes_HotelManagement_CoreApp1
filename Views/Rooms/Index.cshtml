@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MasterDetailes_HotelManagement_CoreApp.Models.Room>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Room_Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price_Per_Night)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability_Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price_Per_Night)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availability_Status)
+            </td>
+            <td>
+                <a class="btn btn-outline-warning"asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
+                <a class="btn btn-outline-info"asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
+                <a class="btn btn-outline-danger"asp-action="Delete" asp-route-id="@item.RoomId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

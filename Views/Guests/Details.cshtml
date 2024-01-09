@@ -1,0 +1,45 @@
+﻿@model MasterDetailes_HotelManagement_CoreApp.Models.Guest
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Guest</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GuestName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GuestName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GuestPicture)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.GuestPicture" width="120" height="120"/>
+        </dd>
+    </dl>
+    @await Component.InvokeAsync("RoomList", Model.reservations)
+
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

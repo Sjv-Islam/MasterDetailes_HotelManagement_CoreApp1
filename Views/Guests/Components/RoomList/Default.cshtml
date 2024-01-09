@@ -1,0 +1,47 @@
+﻿@model List<Reservation>
+
+<table class="table table-responsive table-hover table-bordered table-striped">
+
+    <thead>
+        <tr>
+            <th>
+                Room Number
+            </th>
+            <th>
+                Per Room Cost
+            </th>
+            <th>
+                Total Cost
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+         {
+            <tr>
+                <td>
+                    @item.Room?.Room_Number
+                </td>
+                <td>
+                    @item.Room?.Price_Per_Night
+                </td>
+                <td>
+                    <input asp-for="@item.Total_Cost" class="form-control" readonly />
+                </td>
+            </tr>
+         }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Rent Total = @ViewBag.Total and No of Item is @ViewBag.Count
+
+                Average item Price @Model.Average(i => i.Room?.Price_Per_Night)
+            </td>
+        </tr>
+    </tfoot>
+
+</table>

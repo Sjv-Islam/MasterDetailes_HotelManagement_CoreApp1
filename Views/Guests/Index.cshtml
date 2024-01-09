@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MasterDetailes_HotelManagement_CoreApp.Models.Guest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GuestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUpload)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="data-@item.Id">
+                <td>
+                    @Html.DisplayFor(modelItem => item.GuestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    <img src="@item.GuestPicture" width="80" height="80" />
+                </td>
+                <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    <button class="btn  btn-outline-success btn-icon-split" onclick="ajaxDelete(@item.Id)">
+                        Ajax Delete
+                    </button>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Grand total = @ViewBag.GrandTotal and No of Reservation is @ViewBag.Count and Average payable amount is @ViewBag.Average
+            </td>
+        </tr>
+    </tfoot>
+</table>
+@section Scripts {
+
+    <script>
+
+        function ajaxDelete(id) {
+            var ok = confirm(`Delete guest?`);
+            if (ok) {
+                $.ajax({
+                    url: "/deleteguest/" + id,
+                    type: "delete",
+                    success: function () {
+                        alert("success");
+
+                        $('#data-' + id).remove();
+                    }
+                });
+            }
+        }
+    </script>
+}

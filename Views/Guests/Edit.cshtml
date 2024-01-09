@@ -1,0 +1,97 @@
+﻿@model MasterDetailes_HotelManagement_CoreApp.Models.Guest
+@inject HotelContext db
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Guest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="GuestPicture" />
+            <div class="form-group">
+                <label asp-for="GuestName" class="control-label"></label>
+                <input asp-for="GuestName" class="form-control" />
+                <span asp-validation-for="GuestName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactNo" class="control-label"></label>
+                <input asp-for="ContactNo" class="form-control" />
+                <span asp-validation-for="ContactNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUpload" class="control-label"></label>
+                <input asp-for="ImageUpload" class="form-control" type="file" />
+                <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <br />
+            <table class="table table-responsive table-hover table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>
+                            Room Number
+                        </th>
+                        <th>
+                            Check In Date
+                        </th>
+                        <th>
+                            Check Out Date
+                        </th>
+                        <th>
+                            Total Cost
+                        </th>
+                        <th>
+                            <input type="submit" value="Add" name="command" class="btn btn-success " />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (int i = 0; i < Model.reservations.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select asp-for="reservations[i].RoomId" asp-items="db.Rooms.Select(r=> new SelectListItem(){Text = r.Room_Number,Value = r.RoomId.ToString() })">
+                                </select>
+                            </td>
+                            <td>
+                                <input asp-for="reservations[i].Check_In_Date" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="reservations[i].Check_Out_Date" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="reservations[i].Total_Cost" class="form-control" readonly />
+                            </td>
+                            <td>
+                                <button value="delete-@i" name="command">Delete</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
